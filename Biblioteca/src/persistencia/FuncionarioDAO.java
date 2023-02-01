@@ -1,5 +1,11 @@
 package persistencia;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import dominio.Funcionario;
+
 public class FuncionarioDAO {
 
     private final String LISTAR = "select * from funcionario";
