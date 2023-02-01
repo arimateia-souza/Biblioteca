@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dominio.Emprestimo;
 import dominio.Livro;
 
 public class LivroDAO {
@@ -61,5 +60,53 @@ public class LivroDAO {
 	        }
 	    }
 
+	   public void alteracao(Livro l, int id){
+		try{
+		    conexao.conectar();
+		    PreparedStatement instrucao =
+			    conexao.getConexao().prepareStatement(ALTERAR);
+		    instrucao.setString(1, l.getTitulo());
+		    instrucao.setString(2, l.getAutor());
+		    instrucao.setString(3, l.getAnoPublicacao());
+		    instrucao.setInt(4, id);
+		    instrucao.execute();
+		    conexao.desconectar();
 
+		}catch(Exception e){
+		    System.out.println("Erro na alteração: "+e.getMessage());
+		}
+	    }
+
+	    public void exclusao(int id){
+		try{
+		    conexao.conectar();
+		    PreparedStatement instrucao =
+			    conexao.getConexao().prepareStatement(EXCLUIR);
+		    instrucao.setInt(1, id);
+		    instrucao.execute();
+			    conexao.desconectar();
+		}catch(Exception e){
+		    System.out.println("Erro na exclusão: "+e.getMessage());
+		}
+	    }
+
+	    public Livro buscar(int id){
+		Livro livro = null;
+		try{
+		    conexao.conectar();
+		    PreparedStatement instrucao =
+			    conexao.getConexao().prepareStatement(BUSCAR);
+		    instrucao.setInt(1, id);
+		    ResultSet rs = instrucao.executeQuery();
+		    if(rs.next()){
+			livro = new Livro (rs.getInt("id"), rs.getString("titulo"), rs.getString("autor"),
+				rs.getString("anoPublicacao"));
+		    }
+
+		    conexao.desconectar();
+		}catch(SQLException e){
+		    System.out.println("Erro na busca: "+e.getMessage());
+		}
+		return livro;
+	    }
 }
