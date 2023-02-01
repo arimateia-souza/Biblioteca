@@ -27,12 +27,41 @@ public class Main {
             digito = teclado.nextInt();
             switch(digito) {
                 case 1:
-                	
-                	break;
+                	 int digitoLivro;
+                    do {
+                        teclado.nextLine();
+                        System.out.println("\n|--------------------------------------------------------|\n"
+                                + "|                       MENU DE LIVRO                    |\n"
+                                + "|--------------------------------------------------------|\n"
+                                + "| 1 - CADASTRAR                                          |\n"
+                                + "| 2 - ALTERAR                                            |\n"
+                                + "| 3 - BUSCAR                                             |\n"
+                                + "| 4 - REMOVER                                            |\n"
+                                + "| 5 - LISTAR                                             |\n"
+                                + "| 6 - SAIR DO MENU DE LIVRO                              |\n"
+                                + "|--------------------------------------------------------|\n");
+                        digitoLivro = teclado.nextInt();
+                        teclado.nextLine();
+
+                        switch (digitoLivro) {
+                            	case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+				default:
+			}
+			    
+		    } while (digitoLivro != 6);
             }
             
         }while(digito != 5);
-        
-	}
 }
             
