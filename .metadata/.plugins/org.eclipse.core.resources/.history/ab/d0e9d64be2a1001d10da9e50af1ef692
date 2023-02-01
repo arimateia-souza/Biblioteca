@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Emprestimo {
   private int id;
-  private int leitor;
-  private int livro;
-  private int funcionario;
+  private Leitor leitor;
+  private Livro livro;
+  private Funcionario funcionario;
   private String dataEmprestimo;
   private String dataDevolucao;
 
-  public Emprestimo(int id, int leitor, int livro, int funcionario, String dataEmprestimo, String dataDevolucao) {
+  public Emprestimo(int id, Leitor leitor, Livro livro, Funcionario funcionario, String dataEmprestimo, String dataDevolucao) {
     this.id = id;
     this.leitor = leitor;
     this.livro = livro;
@@ -27,27 +27,27 @@ public class Emprestimo {
     this.id = id;
   }
 
-  public int getLeitor() {
+  public Leitor getLeitor() {
     return leitor;
   }
 
-  public void setLeitor(int leitor) {
+  public void setLeitor(Leitor leitor) {
     this.leitor = leitor;
   }
 
-  public int getLivro() {
+  public Livro getLivro() {
     return livro;
   }
 
-  public void setLivro(int livro) {
+  public void setLivro(Livro livro) {
     this.livro = livro;
   }
 
-  public int getFuncionario() {
+  public Funcionario getFuncionario() {
     return funcionario;
   }
 
-  public void setFuncionario(int funcionario) {
+  public void setFuncionario(Funcionario funcionario) {
     this.funcionario = funcionario;
   }
 
