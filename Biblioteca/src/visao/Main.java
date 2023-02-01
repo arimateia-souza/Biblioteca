@@ -27,7 +27,7 @@ public class Main {
             digito = teclado.nextInt();
             switch(digito) {
                 case 1:
-                	 int digitoLivro;
+                    int digitoLivro;
                     do {
                         teclado.nextLine();
                         System.out.println("\n|--------------------------------------------------------|\n"
@@ -60,6 +60,44 @@ public class Main {
 			}
 			    
 		    } while (digitoLivro != 6);
+			  break;
+			    
+		case 2:
+		     int digitoLeitor;
+			     do {
+                        teclado.nextLine();
+                        System.out.println("\n|--------------------------------------------------------|\n"
+                                + "|                       MENU DE LEITOR                   |\n"
+                                + "|--------------------------------------------------------|\n"
+                                + "| 1 - CADASTRAR                                          |\n"
+                                + "| 2 - ALTERAR                                            |\n"
+                                + "| 3 - BUSCAR                                             |\n"
+                                + "| 4 - REMOVER                                            |\n"
+                                + "| 5 - LISTAR                                             |\n"
+                                + "| 6 - SAIR DO MENU DE LEITOR                             |\n"
+                                + "|--------------------------------------------------------|\n");
+                        digitoLeitor = teclado.nextInt();
+                        teclado.nextLine();
+
+                        switch (digitoLeitor) {
+                            	case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+				default:
+			}
+			    
+		    } while (digitoLeitor != 6);
+			    break;
+			    
             }
             
         }while(digito != 5);
