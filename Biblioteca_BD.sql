@@ -28,7 +28,7 @@ CREATE TABLE emprestimo (
   id_livro INT,
   id_leitor INT,
   id_funcionario INT,
-  data_emprestimo DATE,
+  data_emprestimo NVARCHAR(30),
   data_devolucao DATE,
   FOREIGN KEY (id_livro) REFERENCES livro(id),
   FOREIGN KEY (id_leitor) REFERENCES leitor(id),
