@@ -13,7 +13,7 @@ public class EmprestimoDAO {
     private final String BUSCAR = "select * from emprestimo where id=?";
     private final String INCLUIR = "insert into emprestimo (id_livro, id_leitor, id_funcionario, data_emprestimo, data_devolucao) values (?, ?, ?, ?, ?)";
     private final String EXCLUIR = "delete from emprestimo where id=?";
-    private final String ALTERAR = "update emprestimo set id_livro=?, id_leitor=,"
+    private final String ALTERAR = "update emprestimo set id_livro=?, id_leitor=?,"
     		+ " id_funcionario=?, data_emprestimo=?, data_devolucao=?  where id=?";
 
 

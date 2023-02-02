@@ -77,7 +77,10 @@ public class FuncionarioDAO {
             instrucao.execute();
             conexao.desconectar();
         }catch(Exception e){
-            System.out.println("Erro na exclusão: "+e.getMessage());
+        	System.out.println("|--------------------------------------------------------|");
+            System.out.println("|   ERRO NA EXCLUSÃO: O FUNCIONÁRIO POSSUI PENDÊNCIAS    |");
+            System.out.println("|--------------------------------------------------------|");
+        	//System.out.println("Erro na exclusão: "+e.getMessage());
         }
     }
 

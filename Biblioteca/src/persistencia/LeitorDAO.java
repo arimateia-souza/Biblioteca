@@ -80,7 +80,10 @@ public class LeitorDAO {
             instrucao.execute();
             conexao.desconectar();
         }catch(Exception e){
-            System.out.println("Erro na exclusão: "+e.getMessage());
+        	 System.out.println("|--------------------------------------------------------|");
+             System.out.println("|  NÃO FOI POSSÍVEL EXCLUIR, O LEITOR POSSUI PENDÊNCIAS  |");
+             System.out.println("|--------------------------------------------------------|");
+             //System.out.println("Erro na exclusão: "+e.getMessage());
         }
     }
 

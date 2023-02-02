@@ -1,7 +1,5 @@
 package dominio;
 
-import java.util.Date;
-
 public class Emprestimo {
 	  private int id;
 	  private int leitor;

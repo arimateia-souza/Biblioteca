@@ -14,9 +14,6 @@ public class Conexao {
     public Connection conectar() {
         try {
             connection = DriverManager.getConnection(caminho, user, senha);
-            //System.out.print("|--------------------------------------------------------|\n");
-            //System.out.print("|       CONEXÃO COM O BANCO EFETUADA COM SUCESSO         |\n");
-            //System.out.print("|--------------------------------------------------------|\n");
         }
         catch(SQLException e)
         {
