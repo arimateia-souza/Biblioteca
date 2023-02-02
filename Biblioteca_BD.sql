@@ -38,11 +38,11 @@ CREATE TABLE emprestimo (
 
 
 CREATE TABLE login(
-	usuario VARCHAR(50),
-    senha VARCHAR(9),
-    id_funcionario INT,
-    ativo BOOLEAN,
-	FOREIGN KEY (id_funcionario) REFERENCES funcionario(id)
+  usuario VARCHAR(50),
+  senha VARCHAR(9),
+  id_funcionario INT,
+  ativo BOOLEAN,
+  FOREIGN KEY (id_funcionario) REFERENCES funcionario(id)
 );
 
 select * from funcionario;
@@ -52,6 +52,10 @@ select * from emprestimo;
 select * from login;
 
 
+INSERT INTO funcionario(nome, endereco, telefone) VALUES
+	('MATEUS', 'RUA...', '8767-8732'),
+	('ARIMATÉIA', 'RUA...', '8865-8632');
 
-
-
+INSERT INTO login(usuario, senha, id_funcionario, ativo) VALUES
+	('ARI', '12345', '1', true),
+	('MATEUS', '12345', '2', true);
