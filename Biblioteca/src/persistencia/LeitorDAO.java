@@ -7,15 +7,15 @@ import java.util.List;
 import dominio.Leitor;
 
 public class LeitorDAO {
-
+	private Conexao conexao;
     private final String LISTAR = "select * from leitor";
     private final String BUSCAR = "select * from leitor where id=?";
-    private final String INCLUIR = "insert into leitor (nome, endereco, telefone) values (?, ?, ?)";
+    private final String INCLUIR = "insert into leitor (nome, idade, endereco, telefone) values (?, ?, ?, ?)";
     private final String EXCLUIR = "delete from leitor where id=?";
-    private final String ALTERAR = "update leitor set nome=?, endereco=?, "
+    private final String ALTERAR = "update leitor set nome=?, idade=?, endereco=?, "
             + "telefone=? where id=?";
   
-    public LeitorDao() {
+    public LeitorDAO() {
         conexao = new Conexao();
     }
   
@@ -26,7 +26,7 @@ public class LeitorDAO {
             java.sql.Statement instrucao = (Statement) conexao.getConexao().createStatement();
             ResultSet rs =((java.sql.Statement) instrucao).executeQuery(LISTAR);
             while(rs.next()){
-                Leitor leitor = new Leitor (rs.getInt("id"), rs.getString("nome"), rs.getString("enederco"),
+                Leitor leitor = new Leitor (rs.getInt("id"), rs.getString("nome"), rs.getInt("idade"), rs.getString("endereco"),
                         rs.getString("telefone"));
                 lista.add(leitor);
             }
@@ -43,30 +43,33 @@ public class LeitorDAO {
             PreparedStatement instrucao =
                     conexao.getConexao().prepareStatement(INCLUIR);
             instrucao.setString(1, leitor.getNome());
-            instrucao.setString(2, leitor.getEndereco());
-            instrucao.setString(3, leitor.getTelefone());
+            instrucao.setInt(2, leitor.getIdade());
+            instrucao.setString(3, leitor.getEndereco());
+            instrucao.setString(4, leitor.getTelefone());
             instrucao.execute();
             conexao.desconectar();
         }catch(Exception e){
             System.out.println("Erro na inclusão: "+e.getMessage());
         }
     }
-  
-   public void alteracao(Leitor l, int id){
-        try{
-            conexao.conectar();
-            PreparedStatement instrucao =
-                    conexao.getConexao().prepareStatement(ALTERAR);
-            instrucao.setString(1, l.getNome());
-            instrucao.setString(2, l.getEndereco());
-            instrucao.setString(3, l.getTelefone());
-            instrucao.setInt(4, id);
-            instrucao.execute();
-            conexao.desconectar();
-        }catch(Exception e){
-            System.out.println("Erro na alteração: "+e.getMessage());
-        }
-    }
+
+
+	public void alteracao(Leitor l, int id){
+	        try{
+	            conexao.conectar();
+	            PreparedStatement instrucao =
+	                    conexao.getConexao().prepareStatement(ALTERAR);
+	            instrucao.setString(1, l.getNome());
+	            instrucao.setInt(2, l.getIdade());
+	            instrucao.setString(3, l.getEndereco());
+	            instrucao.setString(4, l.getTelefone());
+	            instrucao.setInt(5, id);
+	            instrucao.execute();
+	            conexao.desconectar();
+	        }catch(Exception e){
+	            System.out.println("Erro na alteração: "+e.getMessage());
+	        }
+	    }
 
     public void exclusao(int id){
         try{
@@ -90,7 +93,7 @@ public class LeitorDAO {
             instrucao.setInt(1, id);
             ResultSet rs = instrucao.executeQuery();
             if(rs.next()){
-                leitor = new Leitor (rs.getInt("id"), rs.getString("nome"), rs.getString("endereco"),
+                leitor = new Leitor (rs.getInt("id"), rs.getString("nome"), rs.getInt("idade"), rs.getString("endereco"),
                         rs.getString("telefone"));
             }
             conexao.desconectar();

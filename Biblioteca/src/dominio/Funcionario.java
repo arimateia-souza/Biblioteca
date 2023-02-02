@@ -13,6 +13,10 @@ public class Funcionario {
 	    this.telefone = telefone;
 	  }
 
+	  public Funcionario() {
+		// TODO Auto-generated constructor stub
+	  }
+
 	  public int getId() {
 	    return id;
 	  }

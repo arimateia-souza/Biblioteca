@@ -1,0 +1,102 @@
+package persistencia;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import dominio.Funcionario;
+
+public class FuncionarioDAO {
+
+    private final String LISTAR = "select * from funcionario";
+    private final String BUSCAR = "select * from funcionario where id=?";
+    private final String INCLUIR = "insert into funcionario (nome, endereco, telefone) values (?, ?, ?)";
+    private final String EXCLUIR = "delete from funcionario where id=?";
+    private final String ALTERAR = "update funcionario set nome=?, endereco=?, "
+            + "telefone=? where id=?";
+  
+    public FuncionarioDao() {
+        conexao = new Conexao();
+    }
+  
+    public List<Funcionario> listar(){
+        List<Funcionario> lista = new ArrayList<>();
+        try{
+            conexao.conectar();
+            java.sql.Statement instrucao = (Statement) conexao.getConexao().createStatement();
+            ResultSet rs =((java.sql.Statement) instrucao).executeQuery(LISTAR);
+            while(rs.next()){
+                Funcionario funcionario = new Funcionario (rs.getInt("id"), rs.getString("nome"), rs.getString("enederco"),
+                        rs.getString("telefone"));
+                lista.add(funcionario);
+            }
+            conexao.desconectar();
+        }catch(SQLException e){
+            System.out.println("Erro no relatorio: "+e.getMessage());
+        }
+        return lista;
+     }
+  
+    public void insert(Funcionario funcionario){
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+                    conexao.getConexao().prepareStatement(INCLUIR);
+            instrucao.setString(1, funcionario.getNome());
+            instrucao.setString(2, funcionario.getEndereco());
+            instrucao.setString(3, funcionario.getTelefone());
+            instrucao.execute();
+            conexao.desconectar();
+        }catch(Exception e){
+            System.out.println("Erro na inclusão: "+e.getMessage());
+        }
+    }
+  
+   public void alteracao(Funcionario f, int id){
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+                    conexao.getConexao().prepareStatement(ALTERAR);
+            instrucao.setString(1, f.getNome());
+            instrucao.setString(2, f.getEndereco());
+            instrucao.setString(3, f.getTelefone());
+            instrucao.setInt(4, id);
+            instrucao.execute();
+            conexao.desconectar();
+        }catch(Exception e){
+            System.out.println("Erro na alteração: "+e.getMessage());
+        }
+    }
+
+    public void exclusao(int id){
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+                    conexao.getConexao().prepareStatement(EXCLUIR);
+            instrucao.setInt(1, id);
+            instrucao.execute();
+            conexao.desconectar();
+        }catch(Exception e){
+            System.out.println("Erro na exclusão: "+e.getMessage());
+        }
+    }
+
+    public Funcionario buscar(int id){
+        Funcionario funcionario = null;
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+                    conexao.getConexao().prepareStatement(BUSCAR);
+            instrucao.setInt(1, id);
+            ResultSet rs = instrucao.executeQuery();
+            if(rs.next()){
+                funcionario = new Funcionario (rs.getInt("id"), rs.getString("nome"), rs.getString("endereco"),
+                        rs.getString("telefone"));
+            }
+            conexao.desconectar();
+        }catch(SQLException e){
+            System.out.println("Erro na busca: "+e.getMessage());
+        }
+        return funcionario;
+    }
+}

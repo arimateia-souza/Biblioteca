@@ -1,0 +1,119 @@
+package persistencia;
+
+import java.beans.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import dominio.Emprestimo;
+
+public class EmprestimoDAO {
+
+    private Conexao conexao;
+    private final String LISTAR = "select * from emprestimo";
+    private final String BUSCAR = "select * from emprestimo where id=?";
+    private final String INCLUIR = "insert into emprestimo (id_livro, id_leitor, id_funcionario, data_emprestimo, data_devolucao) values (?, ?, ?, ?, ?)";
+    private final String EXCLUIR = "delete from emprestimo where id=?";
+    private final String ALTERAR = "update emprestimo set id_livro=?, id_leitor=,"
+    		+ " id_funcionario=?, data_emprestimo=?, data_devolucao=?  where id=?";
+
+
+    public EmprestimoDAO() {
+        conexao = new Conexao();
+    }
+    
+    public List<Emprestimo> listar() {
+        List<Emprestimo> emprestimos = new ArrayList<>();
+
+        try {
+            conexao.conectar();
+            Statement instrucao = (Statement) conexao.getConexao().createStatement();
+            ResultSet resultSet =((java.sql.Statement) instrucao).executeQuery(LISTAR);
+            while (resultSet.next()) {
+                Emprestimo emp = new Emprestimo(resultSet.getInt("id"), resultSet.getInt("leitor"), resultSet.getInt("livro"), resultSet.getInt("funcionario"),
+                resultSet.getString("dataEmprestimo"),
+                resultSet.getString("dataDevolucao"));
+                emprestimos.add(emp);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro na lista: "+e.getMessage());
+        }
+
+        return emprestimos;
+
+    }
+
+    public void insert(Emprestimo emprestimo){
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+                    conexao.getConexao().prepareStatement(INCLUIR);
+            instrucao.setInt(1, emprestimo.getLeitor());
+            instrucao.setInt(2, emprestimo.getLivro());
+            instrucao.setInt(3, emprestimo.getFuncionario());
+            instrucao.setString(4, emprestimo.getDataEmprestimo());
+            instrucao.setString(5, emprestimo.getDataDevolucao());
+            instrucao.execute();
+            conexao.desconectar();
+
+        }catch(Exception e){
+            System.out.println("Erro no cadastro: "+e.getMessage());
+        }
+    }
+
+    public void alteracao(Emprestimo em, int id){
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+                    conexao.getConexao().prepareStatement(ALTERAR);
+            instrucao.setInt(1, em.getLeitor());
+            instrucao.setInt(2, em.getLivro());
+            instrucao.setInt(3, em.getFuncionario());
+            instrucao.setString(4, em.getDataEmprestimo());
+            instrucao.setString(5, em.getDataDevolucao());
+            instrucao.setInt(6, id);
+            instrucao.execute();
+            conexao.desconectar();
+
+
+        }catch(Exception e){
+            System.out.println("Erro na alteração: "+e.getMessage());
+        }
+    }
+
+    public void exclusao(int id){
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+            		conexao.getConexao().prepareStatement(EXCLUIR);
+            instrucao.setInt(1, id);
+            instrucao.execute();
+            conexao.desconectar();
+        }catch(Exception e){
+            System.out.println("Erro na exclusão: "+e.getMessage());
+        }
+    }
+
+    public Emprestimo buscar(int id){
+    	Emprestimo emprestimo = null;
+        try{
+            conexao.conectar();
+            PreparedStatement instrucao =
+            		conexao.getConexao().prepareStatement(BUSCAR);
+            instrucao.setInt(1, id);
+            ResultSet rs = instrucao.executeQuery();
+            if(rs.next()){
+                emprestimo = new Emprestimo (rs.getInt("id"), rs.getInt("leitor"), rs.getInt("livro"), rs.getInt("funcionario"),
+                        rs.getString("data_emprestimo"), rs.getString("data_devolucao"));
+            }
+
+            conexao.desconectar();
+        }catch(SQLException e){
+            System.out.println("Erro na busca: "+e.getMessage());
+        }
+        return emprestimo;
+    }
+}

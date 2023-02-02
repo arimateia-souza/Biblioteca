@@ -15,6 +15,10 @@ public class Leitor {
 	    this.telefone = telefone;
 	  }
 
+	  public Leitor() {
+		  
+	  }
+
 	  public int getId() {
 	    return id;
 	  }

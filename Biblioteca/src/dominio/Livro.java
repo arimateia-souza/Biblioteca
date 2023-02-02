@@ -16,8 +16,11 @@ public class Livro {
 	    this.anoPublicacao = anoPublicacao;
 	    
 	  }
+	  
+	  public Livro() {
+	  }
 
-	public int getId() {
+	  public int getId() {
 	    return id;
 	  }
 

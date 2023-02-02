@@ -1,9 +1,6 @@
 package persistencia;
 
-import java.beans.Statement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ public class EmprestimoDAO {
     private Conexao conexao;
     private final String LISTAR = "select * from emprestimo";
     private final String BUSCAR = "select * from emprestimo where id=?";
-    private final String INCLUIR = "insert into emprestimo (id_livro, id_leitor, id_funcionario, data_emprestimo, data_devolucao) values (?, ?, ?, ?, ?, ?)";
+    private final String INCLUIR = "insert into emprestimo (id_livro, id_leitor, id_funcionario, data_emprestimo, data_devolucao) values (?, ?, ?, ?, ?)";
     private final String EXCLUIR = "delete from emprestimo where id=?";
     private final String ALTERAR = "update emprestimo set id_livro=?, id_leitor=,"
     		+ " id_funcionario=?, data_emprestimo=?, data_devolucao=?  where id=?";
@@ -32,9 +29,9 @@ public class EmprestimoDAO {
             Statement instrucao = (Statement) conexao.getConexao().createStatement();
             ResultSet resultSet =((java.sql.Statement) instrucao).executeQuery(LISTAR);
             while (resultSet.next()) {
-                Emprestimo emp = new Emprestimo(resultSet.getInt("id"), resultSet.getInt("leitor"), resultSet.getInt("livro"), resultSet.getInt("funcionario"),
-                resultSet.getString("dataEmprestimo"),
-                resultSet.getString("dataDevolucao"));
+                Emprestimo emp = new Emprestimo(resultSet.getInt("id"), resultSet.getInt("id_leitor"), resultSet.getInt("id_livro"), resultSet.getInt("id_funcionario"),
+                resultSet.getString("data_emprestimo"),
+                resultSet.getString("data_devolucao"));
                 emprestimos.add(emp);
             }
 
@@ -107,7 +104,7 @@ public class EmprestimoDAO {
             ResultSet rs = instrucao.executeQuery();
             if(rs.next()){
                 emprestimo = new Emprestimo (rs.getInt("id"), rs.getInt("leitor"), rs.getInt("livro"), rs.getInt("funcionario"),
-                        rs.getString("dataEmprestimo"), rs.getString("dataDevolucao"));
+                        rs.getString("data_emprestimo"), rs.getString("data_devolucao"));
             }
 
             conexao.desconectar();

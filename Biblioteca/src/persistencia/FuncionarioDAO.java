@@ -7,7 +7,7 @@ import java.util.List;
 import dominio.Funcionario;
 
 public class FuncionarioDAO {
-
+	private Conexao conexao;
     private final String LISTAR = "select * from funcionario";
     private final String BUSCAR = "select * from funcionario where id=?";
     private final String INCLUIR = "insert into funcionario (nome, endereco, telefone) values (?, ?, ?)";
@@ -15,7 +15,7 @@ public class FuncionarioDAO {
     private final String ALTERAR = "update funcionario set nome=?, endereco=?, "
             + "telefone=? where id=?";
   
-    public FuncionarioDao() {
+    public FuncionarioDAO() {
         conexao = new Conexao();
     }
   
@@ -26,7 +26,7 @@ public class FuncionarioDAO {
             java.sql.Statement instrucao = (Statement) conexao.getConexao().createStatement();
             ResultSet rs =((java.sql.Statement) instrucao).executeQuery(LISTAR);
             while(rs.next()){
-                Funcionario funcionario = new Funcionario (rs.getInt("id"), rs.getString("nome"), rs.getString("enederco"),
+                Funcionario funcionario = new Funcionario (rs.getInt("id"), rs.getString("nome"), rs.getString("endereco"),
                         rs.getString("telefone"));
                 lista.add(funcionario);
             }

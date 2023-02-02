@@ -1,0 +1,367 @@
+package visao;
+
+import java.util.Scanner;
+
+import dominio.Livro;
+import persistencia.LivroDAO;
+
+public class Main {
+	
+	static Livro livro = new Livro();
+	static LivroDAO livroDAO = new LivroDAO();
+	 
+	
+	public static void main(String[] args) {
+        int digito;
+        Scanner teclado = new Scanner(System.in);
+
+        do {
+            System.out.println("\n");
+            System.out.print("|--------------------------------------------------------|\n");
+            System.out.print("|                  SISTEMA BIBLIOTECÁRIO                 |\n");
+            System.out.print("|--------------------------------------------------------|\n");
+            System.out.print("|                       MENU PRINCIPAL                   |\n"
+                    + "|--------------------------------------------------------|\n"
+                    + "| ESCOLHA UMA OPÇÃO ABAIXO:                              |\n"
+                    + "|--------------------------------------------------------|\n"
+                    + "| 1 - LIVROS                                             |\n"
+                    + "| 2 - LEITORES                                           |\n"
+                    + "| 3 - FUNCIONÁRIOS                                       |\n"
+                    + "| 4 - EMPRÉSTIMOS                                        |\n"
+                    + "| 5 - SAIR DO SISTEMA                                    |\n"
+                    + "|--------------------------------------------------------|\n");
+
+            digito = teclado.nextInt();
+            switch(digito) {
+                case 1:
+                    int digitoLivro;
+                    do {
+                        teclado.nextLine();
+                        System.out.println("\n|--------------------------------------------------------|\n"
+                                + "|                       MENU DE LIVROS                   |\n"
+                                + "|--------------------------------------------------------|\n"
+                                + "| 1 - CADASTRAR                                          |\n"
+                                + "| 2 - ALTERAR                                            |\n"
+                                + "| 3 - BUSCAR                                             |\n"
+                                + "| 4 - REMOVER                                            |\n"
+                                + "| 5 - LISTAR                                             |\n"
+                                + "| 6 - SAIR DO MENU DE LIVROS                             |\n"
+                                + "|--------------------------------------------------------|\n");
+                        digitoLivro = teclado.nextInt();
+                        teclado.nextLine();
+
+                        switch (digitoLivro) {
+                            case 1:
+                            	 System.out.println("|--------------------------------------------------------|");
+                                 System.out.println("|                   CADASTRO DE LIVRO                    |");
+                                 System.out.println("|--------------------------------------------------------|");
+                                 System.out.println("| DIGITE O TÍTULO DO LIVRO:                              |");
+                                 System.out.println("|--------------------------------------------------------|");
+                                 livro.setTitulo(teclado.nextLine());
+                                 System.out.println("|--------------------------------------------------------|");
+                                 System.out.println("| DIGITE O AUTOR DO LIVRO:                               |");
+                                 System.out.println("|--------------------------------------------------------|");
+                                 livro.setAutor(teclado.nextLine());
+                                 System.out.println("|--------------------------------------------------------|");
+                                 System.out.println("| DIGITE O ANO DE PUBLICAÇÃO DO LIVRO:                   |");
+                                 System.out.println("|--------------------------------------------------------|");
+                                 livro.setAnoPublicacao(teclado.nextLine());
+                               
+                                
+
+                                 livroDAO.insert(livro);
+
+                                 System.out.println("|--------------------------------------------------------|");
+                                 System.out.println("|            CADASTRO CONCLUÍDO COM SUCESSO              |");
+                                 System.out.println("|--------------------------------------------------------|");
+                                 
+                                 break;
+                                 
+							case 2:
+								   System.out.println("|--------------------------------------------------------|");
+	                                System.out.println("|            ALTERAÇÃO DE CADASTRO DE LIVRO              |");
+	                                System.out.println("|--------------------------------------------------------|");
+	                                System.out.println("| DIGITE O ID DO LIVRO QUE DESEJA ALTERAR:               |");
+	                                System.out.println("|--------------------------------------------------------|");
+	                                int idAlterarLivro = teclado.nextInt();
+
+	                                var livro_busca = livroDAO.buscar(idAlterarLivro);
+	                                
+	                                if (livro_busca == null) {
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| ATENÇÃO: ESSE ID NÃO FOI ENCONTRADO                    |");
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                } else {
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("|       INFORMAÇÕES RELACIONADAS AO ID ESCOLHIDO         |");
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| TÍTULO:" + livro_busca.getTitulo());
+	                                    System.out.println("| AUTOR: " + livro_busca.getAutor());
+	                                    System.out.println("| ANO DE PUBLICAÇÃO:" + livro_busca.getAnoPublicacao());
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| O QUE PRECISA SER ALTERADO?                            |");
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| 1 - TÍTULO                                             |");
+	                                    System.out.println("| 2 - AUTOR                                              |");
+	                                    System.out.println("| 3 - ANO DE PUBLICAÇÃO                                  |");
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| DIGITE A OPÇÃO DESEJADA:                               |");
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    var opc = teclado.nextInt();
+
+	                                    teclado.nextLine();
+	                                    
+	                                    switch (opc) {
+                                        case 1:
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|                    ALTERAÇÃO DE TÍTULO                 |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("| ALTERANDO O TÍTULO DO LIVRO:" + livro_busca.getTitulo());
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("| DIGITE O NOVO TÍTULO DO LIVRO:                         |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            String tituloAlterado = teclado.nextLine();
+                                            
+                                            livro.setTitulo(tituloAlterado);
+
+                                            String autorliv = livro_busca.getAutor();
+                                            livro.setAutor(autorliv);
+
+                                            String anopubliv = livro_busca.getAnoPublicacao();
+                                            livro.setAnoPublicacao(anopubliv);
+
+                                            livro.setId(idAlterarLivro);
+
+                                            livroDAO.alteracao(livro, idAlterarLivro);
+
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|               TÍTULO ALTERADO COM SUCESSO              |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            break;
+
+                                        case 2:
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|                   ALTERAÇÃO DE AUTOR                   |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("| ALTERANDO O AUTOR DO LIVRO: " + livro_busca.getTitulo());
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("| DIGITE O NOVO AUTOR DO LIVRO:                          |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            String autorAlterado = teclado.nextLine();
+                                            livro.setAutor(autorAlterado);
+
+                                            String tituloliv = livro_busca.getTitulo();
+                                            livro.setTitulo(tituloliv);
+
+                                            String anopublicliv = livro_busca.getAnoPublicacao();
+                                            livro.setAnoPublicacao(anopublicliv);
+
+                                            livro.setId(idAlterarLivro);
+
+                                            livroDAO.alteracao(livro, idAlterarLivro);
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|                AUTOR ALTERADO COM SUCESSO              |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            break;
+
+                                        case 3:
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|             ALTERAÇÃO DE ANO DE PUBLICAÇÃO             |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("| ALTERANDO O ANO DE PUBLICAÇÃO DO LIVRO: " + livro_busca.getTitulo());
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("| DIGITE O NOVO ANO DE PUBLICAÇÃO DO LIVRO:              |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            String anoAlterado = teclado.nextLine();
+                                            livro.setAnoPublicacao(anoAlterado);
+
+                                            String titulolivr = livro_busca.getTitulo();
+                                            livro.setTitulo(titulolivr);
+
+                                            String autorlivr = livro_busca.getAutor();
+                                            livro.setAutor(autorlivr);
+                                            
+                                            livro.setId(idAlterarLivro);
+
+                                            livroDAO.alteracao(livro, idAlterarLivro);
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|         ANO DE PUBLICAÇÃO ALTERADO COM SUCESSO         |");
+                                            System.out.println("|--------------------------------------------------------|");
+                                            break;
+                                            
+                                        default:
+                                            System.out.println("|--------------------------------------------------------|");
+                                            System.out.println("|             OPÇÃO INVÁLIDA, TENTE NOVAMENTE            |");
+                                            System.out.println("|--------------------------------------------------------|");
+
+
+                                    }
+                                }
+                                break;
+
+							case 3:
+									System.out.println("|--------------------------------------------------------|");
+	                                System.out.println("|               BUSCAR CADASTRO DE LIVRO                 |");
+	                                System.out.println("|--------------------------------------------------------|");
+	                                System.out.println("| DIGITE O ID DO LIVRO:                                  |");
+	                                System.out.println("|--------------------------------------------------------|");
+	                                int idBuscaLivro = teclado.nextInt();
+	                                teclado.nextLine();
+
+	                                var liv = livroDAO.buscar(idBuscaLivro);
+
+
+	                                if (liv != null) {
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| ID: " + liv.getId());
+	                                    System.out.println("| TÍTULO: " + liv.getTitulo());
+	                                    System.out.println("| AUTOR: " + liv.getAutor());
+	                                    System.out.println("| ANO DE PUBLICAÇÃO: " + liv.getAnoPublicacao());
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                } else {
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                    System.out.println("| ATENÇÃO: ESSE ID NÃO ENCONTRADO                        |");
+	                                    System.out.println("|--------------------------------------------------------|");
+	                                }
+								break;
+								
+							case 4:
+								break;
+
+							case 5:
+								break;
+							case 6:
+								break;
+							default:
+						}
+			    
+                    } while (digitoLivro != 6);
+                    
+                    break;
+			    
+           case 2:
+			     int digitoLeitor;
+			     do {
+	                        teclado.nextLine();
+	                        System.out.println("\n|--------------------------------------------------------|\n"
+	                                + "|                      MENU DE LEITORES                  |\n"
+	                                + "|--------------------------------------------------------|\n"
+	                                + "| 1 - CADASTRAR                                          |\n"
+	                                + "| 2 - ALTERAR                                            |\n"
+	                                + "| 3 - BUSCAR                                             |\n"
+	                                + "| 4 - REMOVER                                            |\n"
+	                                + "| 5 - LISTAR                                             |\n"
+	                                + "| 6 - SAIR DO MENU DE LEITORES                           |\n"
+	                                + "|--------------------------------------------------------|\n");
+	                        digitoLeitor = teclado.nextInt();
+	                        teclado.nextLine();
+	
+	                        switch (digitoLeitor) {
+	                            case 1:
+									break;
+								case 2:
+									break;
+								case 3:
+									break;
+								case 4:
+									break;
+								case 5:
+									break;
+								case 6:
+									break;
+								default:
+							}
+				    
+			    } while (digitoLeitor != 6);
+				
+			     break;
+           case 3:
+        	   int digitoFuncionario;
+               do {
+            	   teclado.nextLine();
+                   System.out.println("\n|--------------------------------------------------------|\n"
+                                + "|                    MENU DE FUNCIONÁRIOS                |\n"
+                                + "|--------------------------------------------------------|\n"
+                                + "| 1 - CADASTRAR                                          |\n"
+                                + "| 2 - ALTERAR                                            |\n"
+                                + "| 3 - BUSCAR                                             |\n"
+                                + "| 4 - REMOVER                                            |\n"
+                                + "| 5 - LISTAR                                             |\n"
+                                + "| 6 - SAIR DO MENU DE FUNCIONÁRIOS                       |\n"
+                                + "|--------------------------------------------------------|\n");
+                    digitoFuncionario = teclado.nextInt();
+                    teclado.nextLine();
+
+                    switch (digitoFuncionario) {
+                    	case 1:
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+						case 5:
+							break;
+						case 6:
+							break;
+						default:
+                    }
+			    
+               } while (digitoFuncionario != 6);
+			  break;
+			  
+           case 4:
+               int digitoEmprestimo;
+               do {
+                    teclado.nextLine();
+                    System.out.println("\n|--------------------------------------------------------|\n"
+                                + "|                    MENU DE EMPRÉSTIMOS                 |\n"
+                                + "|--------------------------------------------------------|\n"
+                                + "| 1 - CADASTRAR                                          |\n"
+                                + "| 2 - ALTERAR                                            |\n"
+                                + "| 3 - BUSCAR                                             |\n"
+                                + "| 4 - REMOVER                                            |\n"
+                                + "| 5 - LISTAR                                             |\n"
+                                + "| 6 - SAIR DO MENU DE EMPRÉSTIMOS                        |\n"
+                                + "|--------------------------------------------------------|\n");
+                     digitoEmprestimo = teclado.nextInt();
+                     teclado.nextLine();
+
+                     switch (digitoEmprestimo) {
+                     	case 1:
+							break;
+						case 2:
+							break;
+						case 3:
+							break;
+						case 4:
+							break;
+						case 5:
+							break;
+						case 6:
+							break;
+						default:
+                     }
+			    
+		    } while (digitoEmprestimo != 6);
+			  
+               break;
+               
+           case 6:
+               System.out.println("|--------------------------------------------------------|");
+               System.out.println("|                   SAINDO DO SISTEMA                    |");
+               System.out.println("|--------------------------------------------------------|");
+               break;
+
+           default:
+               System.out.println("|--------------------------------------------------------|");
+               System.out.println("|             OPÇÃO INVÁLIDA, TENTE NOVAMENTE            |");
+               System.out.println("|--------------------------------------------------------|");
+            
+            }
+        
+        }while(digito != 5);
+       
+	}
+}
